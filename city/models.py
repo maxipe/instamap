@@ -7,17 +7,22 @@ class Coordinate(models.Model):
 class InstagramUser(models.Model):
     name = models.CharField(max_length=200)
 
-class Photo(models.Model):
-    date = models.DateTimeField('date of point')
-    coordinate = models.ForeignKey(Coordinate)
-    author = models.ForeignKey(InstagramUser)
-    likes = models.IntegerField(default=0)
-    coments = models.IntegerField(default=0)
-
 class City(models.Model):
     name = models.CharField(max_length=200)
     center = models.ForeignKey(Coordinate)
 
-    #FIXME: These should be lists.
-    photos = models.ForeignKey(Photo)
-    interestingAreas = models.ForeignKey(Point)
+class Photo(models.Model):
+    date = models.DateTimeField('date of point')
+    coordinate = models.ForeignKey(Coordinate)
+    likes = models.IntegerField(default=0)
+    coments = models.IntegerField(default=0)
+
+    #Belongs to
+    city = models.ForeignKey(City)
+    author = models.ForeignKey(InstagramUser)
+
+class InterestingArea(models.Model):
+    coordinate = models.ForeignKey(Coordinate)
+
+    #Belongs to
+    city = models.ForeignKey(City)
