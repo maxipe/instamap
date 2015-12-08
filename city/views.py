@@ -12,7 +12,7 @@ import requests
 @csrf_exempt
 def index(request):
     form = forms.CharField(label='City', max_length=100)
-    
+
     #return HttpResponse("Hello world! -")
     return render(request, 'index.html', {'form':form})
 
@@ -27,6 +27,8 @@ def getCityInfo(request):
     r = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address='+cityName)
     cityJson = r.json()
 
+    if not cityJson["results"]:
+        return redirect('/')
     #print cityJson["results"][0]["geometry"]["location"]
 
     coordinate = Coordinate()
