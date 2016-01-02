@@ -1,15 +1,16 @@
 from django.db import models
+import geopy.distance
 
 class Coordinate(models.Model):
     latitude = models.CharField(max_length=20)
     longitude = models.CharField(max_length=20)
 
     def distance(self, other):
-        latitudeDifference = abs(self.latitude - other.latitude)
-        longitudeDifference = abs(self.longitude - other.longitude)
+        gc = geopy.distance.great_circle()
+        myPoint = geopy.distance.Point(self.latitude, self.longitude)
+        otherPoint = geopy.distance.Point(other.latitude, other.longitude)
 
-        #Without root... Not "real distance".
-        return latitudeDifference**2 + longitudeDifference**2
+        return gc.measure(myPoint, otherPoint)
 
     def __str__(self):
         return "("+self.latitude+" , "+self.longitude+")"
