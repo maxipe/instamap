@@ -23,6 +23,7 @@
     </h3>
     <div id="map"></div>
 
+    <!--
     <script type="text/javascript">
       var map;
       function initMap() {
@@ -32,6 +33,41 @@
         });
       }
     </script>
+  -->
+
+    <script type="text/javascript">
+      function initMap() {
+        var myLatLng = {
+          lat: {{coordinate.latitude}},
+          lng: {{coordinate.longitude}}
+        };
+
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          scrollwheel: false,
+          zoom: 14
+        });
+
+        {% for latitude, longitude, link in photoTuples %}
+          var photoLatLng = {
+            lat: {{latitude}},
+            lng: {{longitude}}
+          };
+          // Create a marker and set its position.
+          var marker = new google.maps.Marker({
+            map: map,
+            position: photoLatLng,
+            title: '{{link}}',
+            url: '{{link}}'
+          });
+          google.maps.event.addListener(marker, 'click', function() {
+            window.location.href = this.url;
+          });
+        {% endfor %}
+      }
+    </script>
+
 
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGxPX5oAZSrYWoHSSXja0HNFOTQ4NAlp4&callback=initMap">
