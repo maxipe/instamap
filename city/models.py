@@ -13,7 +13,7 @@ class Coordinate(models.Model):
         return gc.measure(myPoint, otherPoint)
 
     def __str__(self):
-        return "("+self.latitude+" , "+self.longitude+")"
+        return "("+str(self.latitude)+" , "+str(self.longitude)+")"
 
 class InstagramUser(models.Model):
     name = models.CharField(max_length=200)
@@ -119,7 +119,8 @@ class Photo(models.Model):
     #author = models.ForeignKey(InstagramUser)
 
     def __str__(self):
-        return "In "+str(self.city)+" by "+str(self.author)+" at "+str(self.date)+"."
+        #return "In "+str(self.city)+" by "+str(self.author)+" at "+str(self.date)+"."
+        return "Photo at "+str(self.coordinate)
 
     def distance(self, other):
         return self.coordinate.distance(other.coordinate)
