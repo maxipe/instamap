@@ -9,31 +9,23 @@
   </head>
 
   <body>
+    <h1>
+      Interesting Places Through Instagram
+    </h1>
+    <br>
 
     <div id="start"></div>
     <form action="/getCityInfo/" method="post">
         <label for="city-name">City name: </label>
-        <input id="city-name" type="text" name="city-name" value="{{ cityName }}">
+        <input id="city-name" type="text" name="city-name" value="{{ cityName }}">  <br>
+        <label for="initial-time">Initial hour: </label>
+        <input id="initial-time" type="text" name="initial-time" value="{{ initialHour }}"> <br>
+        <label for="final-time">Final hour: </label>
+        <input id="final-time" type="text" name="final-time" value="{{ finalHour }}"> <br>
         <input type="submit" value="Ok">
     </form>
 
-    <h3>
-      Latitude: {{coordinate.latitude}} <br>
-      Longitude: {{coordinate.longitude}}
-    </h3>
     <div id="map"></div>
-
-    <!--
-    <script type="text/javascript">
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: {{coordinate.latitude}}, lng: {{coordinate.longitude}}},
-          zoom: 14
-        });
-      }
-    </script>
-  -->
 
     <script type="text/javascript">
       function initMap() {
@@ -68,6 +60,15 @@
       }
     </script>
 
+
+    {% for number, links in photoAlbums %}
+      <div id='{{number}}' >
+        <h2> {{number}} </h2>
+          {% for link in links %}
+            <a href="{{link}}">{{link}}</a> <br>
+          {% endfor %}
+      </div>
+    {% endfor %}
 
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGxPX5oAZSrYWoHSSXja0HNFOTQ4NAlp4&callback=initMap">
